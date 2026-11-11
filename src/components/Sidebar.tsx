@@ -331,7 +331,7 @@ export default function Sidebar({ mobile = false, onClose }: { mobile?: boolean;
         {/* Brand + collapse */}
         <div className={cn("flex h-14 shrink-0 items-center", collapsed ? "justify-center" : "justify-between pl-4 pr-2.5")}>
           {!collapsed && (
-            <Link href="/analytics" aria-label="Agent Gen AI home" className="group rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary-base">
+            <Link href="/analytics" aria-label="Nexora AI home" className="group rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary-base">
               <Logo className="text-text-strong-950" walk="step" walkOn="hover" />
             </Link>
           )}

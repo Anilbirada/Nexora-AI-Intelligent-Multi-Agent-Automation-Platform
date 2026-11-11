@@ -160,7 +160,7 @@ test("Test 1: Generates complete, professional email draft with opt-out notice",
   // Content requirements
   assert.match(draft.body, /Marcus/i, "Greets verified contact Marcus");
   assert.match(draft.body, /Apex Financial Holdings/i, "References client company");
-  assert.match(draft.body, /NexGen Agency/i, "Introduces NexGen Agency");
+  assert.match(draft.body, /Nexora Agency|NexGen Agency/i, "Introduces Agency");
   assert.match(draft.body, /USD/i, "Mentions proposal currency/commercials");
   assert.match(draft.body, /opt-out|unsubscribe/i, "Includes compliant opt-out statement");
   assert.ok(draft.body.length > 200, "Email body has professional depth");
@@ -220,7 +220,7 @@ test("Test 3: Generates professional, direct WhatsApp draft without spam tone", 
 
   assert.strictEqual(draft.channel, "whatsapp");
   assert.strictEqual(draft.status, "pending_approval");
-  assert.match(draft.body, /NexGen Agency/i);
+  assert.match(draft.body, /Nexora Agency|NexGen Agency/i);
   assert.match(draft.body, /Marcus|Apex Financial/i);
   assert.doesNotMatch(draft.body, /BUY NOW|ACT FAST|100% GUARANTEED/i, "Zero spam triggers");
   assert.ok(draft.body.length < 1000, "WhatsApp messages remain concise and readable");

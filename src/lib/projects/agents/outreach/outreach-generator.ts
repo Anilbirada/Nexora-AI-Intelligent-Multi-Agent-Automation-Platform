@@ -285,7 +285,7 @@ I came across your requirements for "${context.projectTitle}" at ${context.clien
 
 ${requirementsSnippet}${architectureSnippet}
 
-At NexGen Agency, we prioritize architectural rigor, predictable sprint delivery, and zero technical debt. We have formalized our solution into Technical Proposal v${context.proposalVersion}, ${timelineText} with transparent milestone deliverables totaling estimated ${context.currency} ${context.proposalTotalCost ? context.proposalTotalCost.toLocaleString() : "discovery sprint"}.
+At Nexora Agency, we prioritize architectural rigor, predictable sprint delivery, and zero technical debt. We have formalized our solution into Technical Proposal v${context.proposalVersion}, ${timelineText} with transparent milestone deliverables totaling estimated ${context.currency} ${context.proposalTotalCost ? context.proposalTotalCost.toLocaleString() : "discovery sprint"}.
 
 Would you be open to a brief 15-minute technical discovery call this week to review the architecture blueprint and milestone deliverables?
 
@@ -293,7 +293,7 @@ Looking forward to hearing your thoughts.
 
 Warm regards,
 Anil
-NexGen Agency | Technical Architecture & Engineering${revisionNote}
+Nexora Agency | Technical Architecture & Engineering${revisionNote}
 
 ---
 Opt-out notice: If this message is not relevant to you, simply reply with "opt-out" or "unsubscribe" and we will permanently remove your contact details from future communications.`;
@@ -315,7 +315,7 @@ Opt-out notice: If this message is not relevant to you, simply reply with "opt-o
     const techHighlights = (context.recommendedTechStack || []).slice(0, 2).join(" & ");
 
     // Strict constraint: Connection note MUST BE <= 300 characters
-    let connectionRequestNote = `Hi ${recipient}, saw your "${shortTitle}" project. NexGen Agency formulated an architecture proposal using ${techHighlights}. Would love to connect and share technical insights.`;
+    let connectionRequestNote = `Hi ${recipient}, saw your "${shortTitle}" project. Nexora Agency formulated an architecture proposal using ${techHighlights}. Would love to connect and share technical insights.`;
 
     if (connectionRequestNote.length > 300) {
       connectionRequestNote = connectionRequestNote.slice(0, 297) + "...";
@@ -338,7 +338,7 @@ Would you be available for a short 10-minute discovery exchange this week to rev
 
 Best regards,
 Anil
-NexGen Agency${revisionNote}`;
+Nexora Agency${revisionNote}`;
 
     return {
       connectionRequestNote,
@@ -357,7 +357,7 @@ NexGen Agency${revisionNote}`;
       revisionNote = `\n\n_(Note: Updated per guidance: "${revisionFeedback}")_`;
     }
 
-    return `${greeting} Anil here from NexGen Agency.
+    return `${greeting} Anil here from Nexora Agency.
 
 I saw your project listing for *"${context.projectTitle}"* at ${context.clientCompany}. 
 
@@ -366,7 +366,7 @@ Our engineering team completed a technical analysis and formulated a concrete ar
 We have the milestone deliverables and architectural breakdown ready. May I share the technical specification with you here or via email?
 
 Best regards,
-Anil | NexGen Agency${revisionNote}`;
+Anil | Nexora Agency${revisionNote}`;
   }
 
   // ── PREREQUISITE ASSERTIONS & NORMALIZATION ──────────────────────────────────

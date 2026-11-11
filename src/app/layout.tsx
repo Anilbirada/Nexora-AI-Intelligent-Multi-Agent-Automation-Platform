@@ -22,10 +22,10 @@ const fontSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Agent Gen AI",
+  title: "Nexora AI",
   // A private workspace behind sign-in: keep every page out of search.
   robots: { index: false, follow: false },
-  description: "Outreach, qualification and CRM for GTM teams",
+  description: "Autonomous Enterprise Deal Intelligence & Project Architecture Fleet",
   // The favicon is src/app/icon.svg and apple-icon.png (Next's file convention):
   // the brand tile, which reads on light and dark tabs alike.
 };

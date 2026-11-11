@@ -184,13 +184,13 @@ export default function ProjectManagerExecutiveDashboard() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold tracking-tight text-white">NEXGEN GLOBAL AI</h1>
+                <h1 className="text-xl font-bold tracking-tight text-white">NEXORA AI</h1>
                 <span className="px-2 py-0.5 rounded text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                   Agent 8: AI Project Manager
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Agency: <span className="text-slate-200 font-medium">NEXGEN AGENCY</span> • Approver: <span className="text-indigo-300 font-semibold">Anil</span> (anil@nexgen.ai)
+                Agency: <span className="text-slate-200 font-medium">NEXORA AGENCY</span> • Approver: <span className="text-indigo-300 font-semibold">Anil</span> (aniladani843@gmail.com)
               </p>
             </div>
           </div>

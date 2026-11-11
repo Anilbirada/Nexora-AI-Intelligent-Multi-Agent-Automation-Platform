@@ -107,7 +107,7 @@ export function Logo({
   className,
   iconClassName = "size-7",
   textClassName = "text-[18px]",
-  label = "Agent Gen AI",
+  label = "Nexora AI",
   walk,
   walkOn,
 }: {
