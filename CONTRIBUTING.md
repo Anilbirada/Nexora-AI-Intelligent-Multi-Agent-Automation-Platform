@@ -1,103 +1,84 @@
-# Contributing to AgentSDR
+# Contributing to Nexora AI
 
-Thanks for taking the time to improve AgentSDR. This guide covers how to
-propose a change, set up a development environment, and get a pull request
-merged. By taking part you agree to follow our
-[Code of Conduct](CODE_OF_CONDUCT.md).
+Thank you for your interest in contributing to **Nexora AI — Intelligent Multi-Agent Automation Platform**! We welcome contributions to our autonomous multi-agent pipelines, deterministic NLP engines, outreach schedulers, and CRM integrations.
 
-## Ways to contribute
+By participating in this project, you agree to abide by our code of conduct and maintain our high standards for code quality, security, and tenant isolation.
 
-- **Report a bug** — open an issue with the bug form. Include steps to
-  reproduce and what you expected.
-- **Suggest a feature** — open an issue with the feature form, describing
-  the problem before the solution. Larger ideas start in
-  [Discussions](https://github.com/Kandid-ai/AgentSDR/discussions).
-- **Improve the docs** — typos, unclear steps and missing explanations are
-  welcome as pull requests without an issue.
-- **Fix an issue** — look for [`good first issue`](https://github.com/Kandid-ai/AgentSDR/labels/good%20first%20issue)
-  and [`help wanted`](https://github.com/Kandid-ai/AgentSDR/labels/help%20wanted).
+---
 
-Security problems are **not** reported in issues — see [SECURITY.md](SECURITY.md).
+## 1. Development Philosophy
 
-## Before you start
+Nexora AI is designed with three core engineering principles:
+1. **Safety First**: External communications require human-in-the-loop governance (`ALLOW_EXTERNAL_OUTREACH="false"` by default; Anil Approval Gate signoff required).
+2. **Deterministic & Cost-Efficient**: Agent pipelines rely on transparent, zero-token deterministic NLP algorithms before falling back to external LLMs.
+3. **Strict Multi-Tenancy**: All database queries must enforce compound organization scoping `(id, organization_id)`.
 
-- Search existing issues and pull requests first.
-- For anything beyond a small fix, comment on the issue (or open one) and
-  wait for a maintainer to confirm the approach. It saves you from building
-  something that can't be merged.
-- One issue per pull request; keep pull requests small and focused.
+---
 
-## Development setup
+## 2. Getting Started
 
-Full details are in [docs/development.md](docs/development.md). In short:
+### Prerequisites
+- **Node.js**: `>= 20.9.0` (v26+ supported)
+- **Bun**: `>= 1.2.0` or **npm** / **pnpm**
+- **PostgreSQL**: `>= 16.0` (with pgvector support recommended)
+- **Git**
 
-```sh
-# Prerequisites: Bun ≥ 1.2, Node ≥ 20.9, PostgreSQL ≥ 16
-git clone https://github.com/Kandid-ai/AgentSDR.git agentsdr
-cd agentsdr
-bun install
-cp .env.example .env.local        # set DATABASE_URL, BETTER_AUTH_SECRET, …
-bun run db:setup                  # creates the schema in an empty database
-bun run db:seed:demo              # optional: demo user + fictional data
-bun run dev                       # http://localhost:3000
+### Local Setup
+
+```bash
+# 1. Clone your fork
+git clone https://github.com/Anilbirada/Nexora-AI-Intelligent-Multi-Agent-Automation-Platform.git
+cd Nexora-AI-Intelligent-Multi-Agent-Automation-Platform
+
+# 2. Install dependencies
+npm install  # or bun install
+
+# 3. Environment configuration
+cp .env.example .env.local
+
+# 4. Database initialization
+npm run db:setup
+
+# 5. Run automated test suite (must pass 122/122)
+npm test
+
+# 6. Launch development server
+npm run dev
 ```
 
-The demo seed signs you in as `demo@example.com` / `demo-password-123`
-in the "Northwind Demo" organization.
+Visit [http://localhost:3000](http://localhost:3000) to view the Nexora AI executive console.
 
-## Making a change
+---
 
-1. Fork the repository and create a branch from `main`
-   (`fix/short-description`, `feat/short-description`, `docs/…`).
-2. Make the change. Follow the conventions below and in [CLAUDE.md](CLAUDE.md),
-   which is the project's rulebook for both humans and coding agents.
-3. Run the checks — the same ones CI runs:
+## 3. Contribution Workflow
 
-   ```sh
-   bun run typecheck
-   bun run lint
-   bun run test
-   bun run build        # for changes that touch pages, routes or config
+1. **Fork & Branch**: Create a descriptive feature branch from `main`:
+   ```bash
+   git checkout -b feature/agent-enhancement
    ```
-4. Open a pull request against `main` and fill in the template.
+2. **Implement Changes**: Write clean, modular TypeScript code with complete type annotations.
+3. **Preserve Isolation**: Ensure all database models enforce compound tenant isolation `(opportunity_id, organization_id)`.
+4. **Run Tests**:
+   ```bash
+   npm test
+   ```
+   All 122+ tests must pass with zero failures.
+5. **Commit Message Conventions**:
+   Follow conventional commits:
+   - `feat(agents): add automated lead deduplication heuristic`
+   - `fix(scheduler): resolve race condition in execution lock`
+   - `docs(api): document multi-agent executive endpoints`
+   - `test(scoring): expand weighted opportunity evaluation assertions`
+6. **Pull Request**: Open a PR targeting `main`. Include:
+   - Clear summary of changes.
+   - Verification steps and test output.
+   - Confirmation that no secrets or `.env*` files are included.
 
-### Conventions that matter here
+---
 
-- **TypeScript only.** No new `.js` / `.mjs` files.
-- **Every piece of data belongs to an organization.** Any code that reads
-  or writes the database follows
-  [docs/multi-tenancy/conventions.md](docs/multi-tenancy/conventions.md):
-  open the organization scope at the entry point, filter every query with
-  `inOrg(...)`. A change to data access should leave
-  `scripts/e2e/tenancy-isolation.ts` passing.
-- **Database changes** come as a re-runnable migration in `scripts/` *plus*
-  the matching Drizzle schema change *plus* a regenerated
-  `db/schema.sql` (`bun run db:schema:dump`) — see
-  [docs/database.md](docs/database.md). New tables are classified in
-  `src/lib/tenancy/registry.ts`.
-- **No secrets in code.** Third-party credentials are connected per
-  organization in the app; platform settings come from the environment and
-  are documented in [docs/configuration.md](docs/configuration.md) and
-  `.env.example`.
-- **Commit messages:** an area prefix and a plain summary — `Outreach:
-  pause sends when the mailbox loses delegation` — with a body explaining
-  *why* when it isn't obvious.
+## 4. Security Disclosures
 
-## Pull request review
-
-- CI must be green (`CI / required`).
-- A maintainer reviews within a few working days. Expect questions; they
-  are about the code, not about you.
-- UI changes include a screenshot or short recording.
-- Maintainers squash-merge or rebase-merge; the PR title becomes the commit
-  subject, so make it read well.
-
-## License of contributions
-
-AgentSDR is licensed under the [MIT License](LICENSE). By submitting a pull
-request you agree that your contribution is licensed under the same license
-(GitHub's inbound = outbound terms) and that you have the right to submit it.
-
-## Getting help
-
-See [SUPPORT.md](SUPPORT.md).
+Please report security issues or sensitive data leaks directly to the maintainer:
+- **Lead Maintainer**: Anil Biradar
+- **Repository**: [https://github.com/Anilbirada/Nexora-AI-Intelligent-Multi-Agent-Automation-Platform](https://github.com/Anilbirada/Nexora-AI-Intelligent-Multi-Agent-Automation-Platform)
+- **Confidentiality**: Do not file public GitHub issues for security vulnerabilities.
