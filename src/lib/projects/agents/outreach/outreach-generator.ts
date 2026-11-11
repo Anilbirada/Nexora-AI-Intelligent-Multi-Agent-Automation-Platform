@@ -306,10 +306,11 @@ Opt-out notice: If this message is not relevant to you, simply reply with "opt-o
     revisionFeedback?: string,
   ): LinkedInDraftPackage {
     const recipient = context.clientName || "there";
+    const safeTitle = context.projectTitle || "Project Opportunity";
     const shortTitle =
-      context.projectTitle.length > 32
-        ? `${context.projectTitle.slice(0, 30)}...`
-        : context.projectTitle;
+      safeTitle.length > 32
+        ? `${safeTitle.slice(0, 30)}...`
+        : safeTitle;
 
     const techHighlights = (context.recommendedTechStack || []).slice(0, 2).join(" & ");
 
@@ -440,7 +441,7 @@ Anil | NexGen Agency${revisionNote}`;
     if (
       opportunity.status === "rejected" ||
       opportunity.status === "disqualified" ||
-      scoring?.recommendedAction === "disqualify" ||
+      scoring?.recommendedAction === "pass" ||
       scoring?.isQualified === false
     ) {
       throw new Error(

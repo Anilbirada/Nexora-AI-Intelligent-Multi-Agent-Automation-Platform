@@ -12,6 +12,8 @@ export type CredibilityTier =
 export type PublicContactEvidence = {
   name?: string;
   role?: string;
+  title?: string;
+  email?: string;
   channel: "email" | "linkedin" | "website" | "github" | "public_directory";
   value: string;
   isVerified: boolean;

@@ -46,7 +46,7 @@ export async function POST(request: Request) {
           hasResearch: Boolean(oppRecord.opportunity.clientDomain),
           hasAnalysis: Boolean(metadata.analysis),
           hasProposal: Boolean(latestProposal),
-          proposalStatus: latestProposal?.proposal.status,
+          proposalStatus: latestProposal?.status,
           outreachStatus: approvedOutreach ? "approved" : null,
         };
       }

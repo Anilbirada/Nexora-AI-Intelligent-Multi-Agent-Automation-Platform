@@ -37,8 +37,8 @@ export async function GET(request: Request) {
       estimatedBudgetMax: r.opportunity.estimatedBudgetMax ? Number(r.opportunity.estimatedBudgetMax) : null,
       isVerified: Boolean(r.opportunity.clientDomain && !r.opportunity.clientDomain.includes("free")),
       status: r.opportunity.status,
-      overallScore: r.score?.overallScore,
-      isQualified: r.score?.isQualified,
+      overallScore: r.score?.overallScore ? Number(r.score.overallScore) : null,
+      isQualified: Boolean(r.score?.isQualified),
       createdAt: r.opportunity.createdAt,
     }));
 

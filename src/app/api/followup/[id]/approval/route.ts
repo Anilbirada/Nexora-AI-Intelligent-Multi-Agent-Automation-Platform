@@ -80,6 +80,7 @@ export async function POST(
     const approvedTask = orchestrator.processTaskApproval(
       {
         ...targetTask!,
+        channel: targetTask!.channel as any,
         activityHistory: (targetTask!.activityHistory as any) || [],
       },
       {

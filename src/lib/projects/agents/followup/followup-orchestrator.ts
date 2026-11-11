@@ -178,7 +178,6 @@ export class FollowupOrchestrator {
     const isAnil = isAnilAuthorizedAccount({
       userId: decision.userId,
       userEmail: decision.userEmail,
-      userRoles: decision.userRoles,
       isAnilExplicit: decision.isAnilExplicit,
       isTrustedServerContext: decision.isTrustedServerContext,
     });

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       title: r.opportunity.title,
       clientName: r.opportunity.clientName,
       category: r.opportunity.category,
-      overallScore: r.score?.overallScore ?? 0,
+      overallScore: r.score?.overallScore ? Number(r.score.overallScore) : 0,
       qualificationGrade: r.score?.qualificationGrade ?? "F",
       estimatedBudgetMax: r.opportunity.estimatedBudgetMax ? Number(r.opportunity.estimatedBudgetMax) : null,
       currency: r.opportunity.currency,
@@ -37,13 +37,13 @@ export async function POST(request: Request) {
     }));
 
     const totalDiscovered = oppRows.length;
-    const totalQualified = scoredOpps.filter((o) => o.isQualified && o.overallScore >= 75).length;
+    const totalQualified = scoredOpps.filter((o) => o.isQualified && Number(o.overallScore) >= 75).length;
 
     const pipelineEvidence: PipelineEvidenceData = {
       totalDiscovered,
       totalResearched: oppRows.filter((r) => r.opportunity.clientDomain).length,
       totalAnalyzed: oppRows.filter((r) => r.opportunity.metadata && (r.opportunity.metadata as any).analysis).length,
-      totalScored: scoredOpps.filter((o) => o.overallScore > 0).length,
+      totalScored: scoredOpps.filter((o) => Number(o.overallScore) > 0).length,
       totalQualified,
       proposalsDrafted: pendingApprovals.proposals.length,
       proposalsPendingApproval: pendingApprovals.proposals.filter((p) => p.proposal.status === "pending_approval").length,

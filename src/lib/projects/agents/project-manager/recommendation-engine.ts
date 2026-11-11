@@ -27,6 +27,10 @@ export interface RawScoredOpportunity {
   currency?: string;
   isQualified: boolean;
   credibilityScore?: number;
+  status?: string;
+  discoveredAt?: Date;
+  isVerified?: boolean;
+  isSuspicious?: boolean;
 }
 
 export class RecommendationEngine {

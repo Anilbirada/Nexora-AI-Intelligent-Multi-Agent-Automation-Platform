@@ -82,7 +82,7 @@ async function runEndToEndAudit() {
   console.log(`  ✔ Company Name: ${clientProfile.companyName}`);
   console.log(`  ✔ Client Domain: ${clientProfile.domain || "N/A"}`);
   console.log(`  ✔ Credibility Tier: ${clientProfile.credibilityTier} (${clientProfile.credibilityScore}/100)`);
-  console.log(`  ✔ Free Webmail Flagged: ${clientProfile.hasFreeWebmail ? "YES" : "NO"}`);
+  console.log(`  ✔ Free Webmail Flagged: ${clientProfile.credibilityScore < 50 ? "YES" : "NO"}`);
   console.log(`  ✔ Tech Footprint: ${clientProfile.techStackDetected.join(", ") || "None detected"}`);
   console.log(`  ✔ Duration: ${benchmarks.researchDurationMs}ms`);
 
@@ -194,6 +194,7 @@ async function runEndToEndAudit() {
   // ── 8. ANIL HUMAN APPROVAL: OUTREACH ────────────────────────────────────────
   console.log("\n▶ [Security Gate: Anil Outreach Approval] Authorizing outreach message...");
   const approvedEmail = OutreachApprovalGate.applyDecision(outreachPkg.email, {
+    messageId: outreachPkg.email.id || "msg-email-01",
     action: "approve",
     userId: "user-anil-identity",
     userEmail: "anil@nexgen.ai",
@@ -217,7 +218,7 @@ async function runEndToEndAudit() {
   benchmarks.followupDurationMs = Date.now() - t7;
 
   console.log(`  ✔ Sequence Created: ${sequence.id} (Status: ${sequence.status})`);
-  console.log(`  ✔ Step 1 Due: ${sequence.nextFollowupDue?.toISOString()}`);
+  console.log(`  ✔ Step 1 Due: ${new Date(sequence.nextFollowupDue).toISOString()}`);
   console.log(`  ✔ Duration: ${benchmarks.followupDurationMs}ms`);
 
   // ── 10. AGENT 8: AI PROJECT MANAGER & REPORTING ──────────────────────────────
@@ -229,7 +230,7 @@ async function runEndToEndAudit() {
       id: "opp-live-01",
       title: candidate.title,
       clientName: clientProfile.companyName,
-      isVerified: clientProfile.credibilityTier !== "unverified",
+      isVerified: Boolean(clientProfile.isVerified),
       status: "scored",
       overallScore: scoring.overallScore,
       isQualified: scoring.isQualified,

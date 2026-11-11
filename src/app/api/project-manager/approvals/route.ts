@@ -32,8 +32,8 @@ export async function GET(request: Request) {
         clientName: opp.clientName || "Discovered Client",
         title: p.title,
         version: p.version,
-        priority: row.score && row.score.overallScore >= 85 ? "urgent" : "high",
-        score: row.score ? row.score.overallScore : null,
+        priority: row.score && Number(row.score.overallScore) >= 85 ? "urgent" : "high",
+        score: row.score ? Number(row.score.overallScore) : null,
         budgetFormatted: p.totalCostEstimate ? `${p.currency} ${p.totalCostEstimate}` : null,
         pendingAgeHours: hoursOld,
         recommendedNextAction: "Review executive summary and milestone breakdown, then approve for Agent 6 outreach drafting.",
@@ -140,19 +140,21 @@ export async function POST(request: Request) {
     const repo = new PostgresProjectRepository();
 
     if (itemType === "proposal") {
-      await repo.updateProposalApproval({
+      await repo.updateProposalDecision({
         organizationId: ctx.organizationId,
         proposalId: itemId,
         status: action === "approve" ? "approved" : action === "reject" ? "rejected" : "revision_requested",
         approvedByUserId: action === "approve" ? ctx.userId : undefined,
+        approvedAt: action === "approve" ? new Date() : undefined,
         reviewerFeedback: reviewerFeedback || `Decision ${action} by Anil.`,
       });
     } else if (itemType === "outreach") {
-      await repo.updateOutreachMessageApproval({
+      await repo.updateOutreachApprovalDecision({
         organizationId: ctx.organizationId,
         messageId: itemId,
-        status: action === "approve" ? "approved" : action === "reject" ? "rejected" : "revision_requested",
+        status: action === "approve" ? "approved" : action === "reject" ? "rejected" : "pending_approval",
         approvedByUserId: action === "approve" ? ctx.userId : undefined,
+        approvedAt: action === "approve" ? new Date() : undefined,
         reviewerFeedback: reviewerFeedback || `Decision ${action} by Anil.`,
         activityEvent: {
           action: "approval_decision",
@@ -168,7 +170,9 @@ export async function POST(request: Request) {
         taskId: itemId,
         status: action === "approve" ? "approved" : action === "reject" ? "rejected" : "pending_approval",
         approvedByUserId: action === "approve" ? ctx.userId : undefined,
-        reviewerFeedback: reviewerFeedback || `Decision ${action} by Anil.`,
+        approvedAt: action === "approve" ? new Date() : undefined,
+        revisionFeedback: action === "reject" ? undefined : reviewerFeedback || `Decision ${action} by Anil.`,
+        rejectionReason: action === "reject" ? reviewerFeedback || `Rejected by Anil.` : undefined,
         activityEvent: {
           action: "approval_decision",
           performedByUserId: ctx.userId,

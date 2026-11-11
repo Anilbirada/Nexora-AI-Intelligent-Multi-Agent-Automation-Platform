@@ -40,7 +40,6 @@ export async function POST(
     const isAnil = isAnilAuthorizedAccount({
       id: ctx.userId,
       email: ctx.userEmail,
-      userRoles: ctx.roles,
     });
 
     if (!isAnil) {
@@ -111,7 +110,7 @@ export async function POST(
     // 5. Audit Log in agent_executions
     await repository.logAgentExecution({
       organizationId: ctx.organizationId,
-      agentType: "outreach_manager",
+      agentType: "outreach_manager" as any,
       status: "completed",
       inputPayload: {
         messageId: existing.message.id,

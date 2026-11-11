@@ -60,6 +60,7 @@ export type FollowupTaskRecord = {
   approvedAt?: string | Date | null;
   rejectionReason?: string | null;
   revisionFeedback?: string | null;
+  reviewerFeedback?: string | null;
   activityHistory: FollowupActivityEvent[];
   sentAt?: string | Date | null;
   failedReason?: string | null;

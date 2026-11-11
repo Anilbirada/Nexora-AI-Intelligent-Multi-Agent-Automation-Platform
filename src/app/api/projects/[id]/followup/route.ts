@@ -175,6 +175,7 @@ export async function POST(
       const updatedTask = orchestrator.generateStepDraft(
         {
           ...targetTask,
+          channel: targetTask.channel as any,
           charCount: targetTask.charCount || 0,
           activityHistory: (targetTask.activityHistory as any) || [],
           metadata: (targetTask.metadata as any) || {},

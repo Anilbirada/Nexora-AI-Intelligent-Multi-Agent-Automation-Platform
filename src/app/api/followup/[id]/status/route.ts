@@ -44,6 +44,7 @@ export async function PATCH(
     const seqTyped = {
       ...sequence,
       channel: sequence.channel as any,
+      status: sequence.status as any,
       activityHistory: (sequence.activityHistory as any) || [],
       metadata: (sequence.metadata as any) || {},
     };

@@ -82,7 +82,7 @@ export async function POST(
       analysis = await analyzer.analyzeProject({
         contentHash: raw.contentHash || opp.id,
         sourcePlatform: opp.sourcePlatform,
-        sourceUrl: opp.sourceUrl || undefined,
+        sourceUrl: opp.sourceUrl || "",
         title: opp.title,
         description: opp.description,
         primaryCategory: opp.category as any,
@@ -108,7 +108,7 @@ export async function POST(
         project: {
           contentHash: raw.contentHash || opp.id,
           sourcePlatform: opp.sourcePlatform,
-          sourceUrl: opp.sourceUrl || undefined,
+          sourceUrl: opp.sourceUrl || "",
           title: opp.title,
           description: opp.description,
           primaryCategory: opp.category as any,

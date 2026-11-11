@@ -451,7 +451,7 @@ export type OutreachMessageStatus =
   | "cancelled";
 
 export type OutreachActivityEvent = {
-  action: "created" | "edited" | "approved" | "rejected" | "revision_requested" | "scheduled" | "dispatch_blocked";
+  action: "created" | "edited" | "approved" | "rejected" | "revision_requested" | "scheduled" | "dispatch_blocked" | "approval_decision";
   performedByUserId: string;
   performedByUserEmail?: string;
   timestamp: string;

@@ -204,8 +204,8 @@ export async function runNexgenDailyReportJob(): Promise<ScheduledJobSummary> {
           const followups = await repository.getFollowupSequences(org.id);
           const executions = await repository.getAgentExecutions(org.id, 100);
 
-          const approvedProposals = proposals.filter((p) => p.status === "approved").length;
-          const dispatchedOutreach = outreach.filter((m) => m.status === "sent").length;
+          const approvedProposals = proposals.filter((p) => p.proposal.status === "approved").length;
+          const dispatchedOutreach = outreach.filter((m) => m.message.status === "sent").length;
 
           // 3. Generate structured executive report
           const report = DailyReportGenerator.generateDailyReport({
@@ -223,7 +223,7 @@ export async function runNexgenDailyReportJob(): Promise<ScheduledJobSummary> {
               proposalsApproved: approvedProposals,
               outreachDraftsGenerated: outreach.length,
               outreachPendingApproval: pendingData.outreachMessages.length,
-              outreachApproved: outreach.filter((m) => m.status === "approved").length,
+              outreachApproved: outreach.filter((m) => m.message.status === "approved").length,
               outreachDispatched: dispatchedOutreach,
               clientResponsesTotal: 0,
               clientResponsesPendingAttention: 0,
@@ -245,15 +245,34 @@ export async function runNexgenDailyReportJob(): Promise<ScheduledJobSummary> {
             pendingApprovals: [
               ...pendingData.proposals.map((item) => ({
                 id: item.proposal.id,
-                entityType: "proposal" as const,
+                type: "proposal" as const,
+                opportunityId: item.opportunity.id,
+                clientName: item.opportunity.clientName || "Discovered Client",
                 title: item.proposal.title,
-                createdAt: item.proposal.createdAt,
+                version: item.proposal.version,
+                priority: ((item.score && Number(item.score.overallScore) >= 85 ? "urgent" : "high") as any),
+                score: item.score ? Number(item.score.overallScore) : null,
+                budgetFormatted: item.proposal.totalCostEstimate ? `${item.proposal.currency} ${item.proposal.totalCostEstimate}` : null,
+                pendingAgeHours: Math.round((Date.now() - new Date(item.proposal.createdAt).getTime()) / 3600000),
+                recommendedNextAction: "Review executive summary and approve for outreach drafting.",
+                summaryOrPreview: (item.proposal.executiveSummary || "").slice(0, 160) + "...",
+                submittedAt: item.proposal.createdAt,
+                status: item.proposal.status,
               })),
               ...pendingData.outreachMessages.map((item) => ({
                 id: item.message.id,
-                entityType: "outreach_message" as const,
-                title: item.message.subject || "Outreach Draft",
-                createdAt: item.message.createdAt,
+                type: "outreach" as const,
+                opportunityId: item.opportunity.id,
+                clientName: item.opportunity.clientName || "Discovered Client",
+                title: `${item.message.channel.toUpperCase()} Outreach Draft (v${item.message.version})`,
+                channel: item.message.channel,
+                version: item.message.version,
+                priority: "normal" as const,
+                pendingAgeHours: Math.round((Date.now() - new Date(item.message.createdAt).getTime()) / 3600000),
+                recommendedNextAction: "Review draft personalization and approve for dispatch.",
+                summaryOrPreview: (item.message.body || "").slice(0, 160) + "...",
+                submittedAt: item.message.createdAt,
+                status: item.message.status,
               })),
             ],
             clientResponses: [],

@@ -87,5 +87,5 @@ service-account*.json
 *.xlsx
 /*.csv
 
-# Real copies of scripts/examples/* (mailboxes, sender knowledge, test person)
-/scripts/local/
+# Scratch and temporary test scripts
+/scratch/

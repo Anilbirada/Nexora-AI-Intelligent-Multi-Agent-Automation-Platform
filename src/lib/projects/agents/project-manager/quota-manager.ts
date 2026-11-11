@@ -23,7 +23,7 @@ export interface RawOpportunityRecord {
   estimatedBudgetMin?: number | string | null;
   estimatedBudgetMax?: number | string | null;
   isVerified?: boolean;
-  status: string; // "discovered" | "scored" | "rejected" | etc.
+  status?: string; // "discovered" | "scored" | "rejected" | etc.
   overallScore?: number | null;
   isQualified?: boolean | null;
   isDuplicate?: boolean;

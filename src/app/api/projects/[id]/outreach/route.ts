@@ -216,7 +216,7 @@ export async function POST(
       // Audit Execution Logging
       await repository.logAgentExecution({
         organizationId: ctx.organizationId,
-        agentType: "outreach_manager",
+        agentType: "outreach_manager" as any,
         status: "completed",
         inputPayload: {
           opportunityId: opp.id,
