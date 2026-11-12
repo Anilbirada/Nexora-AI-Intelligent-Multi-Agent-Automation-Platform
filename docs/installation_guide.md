@@ -66,7 +66,7 @@ bun install
    NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
    # Master Secret (Generate with: openssl rand -hex 32)
-   BETTER_AUTH_SECRET="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+   BETTER_AUTH_SECRET="generate-32-byte-hex-with-openssl-rand-hex-32"
 
    # Safety Policy for Multi-Agent Outbound Communication
    ALLOW_EXTERNAL_OUTREACH="false"
