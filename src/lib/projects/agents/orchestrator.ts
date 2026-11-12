@@ -49,7 +49,8 @@ export function isAnilAuthorizedAccount(
     return true;
   }
 
-  const anilEmail = (process.env.ANIL_APPROVAL_EMAIL || "anil@nexgen.ai").toLowerCase().trim();
+  const rawEmails = process.env.ANIL_APPROVAL_EMAIL || "anil@nexgen.ai";
+  const configuredEmails = rawEmails.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
   const anilUserId = process.env.ANIL_USER_ID;
   const userEmail = (user.email || "").toLowerCase().trim();
 
@@ -57,8 +58,13 @@ export function isAnilAuthorizedAccount(
     return true;
   }
 
-  // Exact matching against configured Anil email address or official anil@nexgen.ai domain
-  return Boolean(userEmail && (userEmail === anilEmail || userEmail === "anil@nexgen.ai"));
+  // Exact matching against configured Anil email addresses or official domains
+  return Boolean(
+    userEmail &&
+      (configuredEmails.includes(userEmail) ||
+        userEmail === "anil@nexgen.ai" ||
+        userEmail === "anil@nexora.ai")
+  );
 }
 
 export type ExecutionState = {

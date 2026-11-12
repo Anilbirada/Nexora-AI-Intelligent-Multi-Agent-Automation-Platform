@@ -52,7 +52,12 @@ export function isAnilAuthorizedAccount(
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean);
 
-  if (effectiveEmail && configuredEmails.includes(effectiveEmail)) {
+  if (
+    effectiveEmail &&
+    (configuredEmails.includes(effectiveEmail) ||
+      effectiveEmail === "anil@nexgen.ai" ||
+      effectiveEmail === "anil@nexora.ai")
+  ) {
     return true;
   }
 

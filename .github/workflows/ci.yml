@@ -38,7 +38,7 @@ jobs:
       - name: Execute 8-Agent Multi-Agent Test Suite (122 Tests)
         env:
           ALLOW_EXTERNAL_OUTREACH: "false"
-          ANIL_APPROVAL_EMAIL: "anil@nexora.ai"
+          ANIL_APPROVAL_EMAIL: "anil@nexgen.ai,anil@nexora.ai,aniladani843@gmail.com"
           DATABASE_URL: "postgres://postgres:password@localhost:5432/nexora_ai"
           DATABASE_SSL: "disable"
           BETTER_AUTH_SECRET: "ci-secret-for-testing-only-0000000000000000000000"
