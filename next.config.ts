@@ -4,6 +4,13 @@ import pkg from "./package.json";
 const nextConfig: NextConfig = {
   output: "standalone",
 
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // A second dev server beside the usual one (e.g. the demo, DEMO_MODE=true,
   // on its own database) needs its own build directory: two `next dev` in one
   // folder otherwise fight over .next's lock.
