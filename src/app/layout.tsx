@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
-import { Instrument_Serif, Inter as FontSans } from "next/font/google";
 import AppShell from "@/components/AppShell";
 import DialogProvider from "@/components/DialogProvider";
 import { RemoteRepCallBar } from "@/components/calls/RemoteRepCallBar";
@@ -10,16 +9,13 @@ import { THEME_INIT_SCRIPT, ThemeProvider } from "@/components/theme/ThemeProvid
 import { isDemoMode } from "@/lib/demo/mode";
 import "./globals.css";
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans-inter",
-});
+const fontSans = {
+  variable: "font-sans",
+};
 
-const fontSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-instrument-serif-next",
-});
+const fontSerif = {
+  variable: "font-serif",
+};
 
 export const metadata: Metadata = {
   title: "Nexora AI",
