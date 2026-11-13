@@ -1,8 +1,8 @@
 # Stage 1: Install dependencies
 FROM oven/bun:1-alpine AS deps
 WORKDIR /app
-COPY package.json bun.lock ./
-RUN bun install --frozen-lockfile
+COPY package.json bun.lock* ./
+RUN bun install
 
 # Stage 2: Build the Next.js app
 FROM oven/bun:1-alpine AS builder
@@ -15,9 +15,9 @@ RUN bun run build
 FROM oven/bun:1-alpine AS runner
 WORKDIR /app
 
-LABEL org.opencontainers.image.title="AgentSDR" \
-      org.opencontainers.image.description="Open-source AI sales development platform" \
-      org.opencontainers.image.source="https://github.com/Kandid-ai/AgentSDR" \
+LABEL org.opencontainers.image.title="Nexora AI" \
+      org.opencontainers.image.description="Nexora AI — Intelligent Multi-Agent Automation Platform" \
+      org.opencontainers.image.source="https://github.com/Anilbirada/Nexora-AI-Intelligent-Multi-Agent-Automation-Platform" \
       org.opencontainers.image.licenses="MIT"
 
 ENV NODE_ENV=production
